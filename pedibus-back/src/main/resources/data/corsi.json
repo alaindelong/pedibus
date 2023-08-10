@@ -1,0 +1,34 @@
+[
+{
+"percorsoId": "IDFM:C01371",
+"servizioId": "IDFM:10213",
+"corsoId": "IDFM:TRANSDEV_ROISSY",
+"shapeId":"",
+"directionId": 0,
+"nomeCapoLinea": "ROISSY"
+},
+{
+"percorsoId": "IDFM:C01371",
+"servizioId": "IDFM:10213",
+"corsoId": "IDFM:TRANSDEV_CERGY",
+"shapeId":"",
+"directionId": 1,
+"nomeCapoLinea": "CERGY"
+},
+{
+"percorsoId": "IDFM:C01370",
+"servizioId": "IDFM:10212",
+"corsoId": "IDFM:STIVO_CERGY",
+"shapeId":"",
+"directionId": 1,
+"nomeCapoLinea": "CERGY LE HAUT"
+},
+{
+"percorsoId": "IDFM:C01370",
+"servizioId": "IDFM:10212",
+"corsoId": "IDFM:STIVO_POISSY",
+"shapeId":"",
+"directionId": 0,
+"nomeCapoLinea": "POISSY RER"
+}
+]

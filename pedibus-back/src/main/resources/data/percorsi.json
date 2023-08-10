@@ -1,0 +1,16 @@
+[
+{
+"percorsoId":  "IDFM:C01371",
+"agenziaId":  "IDFM:13",
+"percorsoShortName": "1",
+"percorsoLongName": "LIGNE_H",
+"percorsoType": 1
+},
+{
+"percorsoId":  "IDFM:C01370",
+"agenziaId":  "IDFM:13",
+"percorsoShortName": "2",
+"percorsoLongName": "LIGNE_9518",
+"percorsoType": 1
+}
+]

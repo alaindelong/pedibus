@@ -1,0 +1,25 @@
+[{
+"servizioId": "IDFM:10213",
+"lunedi":1,
+"martedi": 1,
+"mercoledi":1,
+"giovedi": 1,
+"venerdi":1,
+"sabato": 0,
+"domenica": 0,
+"dataInizioServizio": "20230701",
+"dataFineServizio": "20230801"
+},
+{
+"servizioId": "IDFM:10212",
+"lunedi":1,
+"martedi": 1,
+"mercoledi":1,
+"giovedi": 1,
+"venerdi":1,
+"sabato": 1,
+"domenica": 1,
+"dataInizioServizio": "20230901",
+"dataFineServizio": "20231001"
+}
+]

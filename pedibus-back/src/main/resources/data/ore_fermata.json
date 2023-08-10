@@ -1,0 +1,82 @@
+[
+{
+"corsoId": "IDFM:TRANSDEV_ROISSY",
+"oraArrivo":"16:16:00",
+"oraPartenza": "16:16:00",
+"fermataId": "IDFM:23310",
+"fermataSequenza":0,
+"destinazione":"ROISSY"
+},
+{
+"corsoId": "IDFM:TRANSDEV_ROISSY",
+"oraArrivo":"16:20:00",
+"oraPartenza": "16:20:00",
+"fermataId": "IDFM:23311",
+"fermataSequenza":1,
+"destinazione":"ROISSY"
+},
+{
+"corsoId": "IDFM:TRANSDEV_ROISSY",
+"oraArrivo":"16:30:00",
+"oraPartenza": "16:30:00",
+"fermataId": "IDFM:23312",
+"fermataSequenza":2,
+"destinazione":"ROISSY"
+},
+{
+"corsoId": "IDFM:TRANSDEV_CERGY",
+"oraArrivo":"16:30:00",
+"oraPartenza": "16:40:00",
+"fermataId": "IDFM:23312",
+"fermataSequenza":0,
+"destinazione":"CERGY"
+},
+{
+"corsoId": "IDFM:TRANSDEV_CERGY",
+"oraArrivo":"16:50:00",
+"oraPartenza": "16:50:00",
+"fermataId": "IDFM:23311",
+"fermataSequenza":1,
+"destinazione":"CERGY"
+},
+{
+"corsoId": "IDFM:TRANSDEV_CERGY",
+"oraArrivo":"16:54:00",
+"oraPartenza": "16:54:00",
+"fermataId": "IDFM:23310",
+"fermataSequenza":2,
+"destinazione":"CERGY"
+},
+{
+"corsoId": "IDFM:STIVO_CERGY",
+"oraArrivo":"08:30:00",
+"oraPartenza": "08:30:00",
+"fermataId": "IDFM:23313",
+"fermataSequenza":0,
+"destinazione":"POISSY"
+},
+{
+"corsoId": "IDFM:STIVO_CERGY",
+"oraArrivo":"08:50:00",
+"oraPartenza": "08:50:00",
+"fermataId": "IDFM:23314",
+"fermataSequenza":1,
+"destinazione":"POISSY"
+},
+{
+"corsoId": "IDFM:STIVO_POISSY",
+"oraArrivo":"08:50:00",
+"oraPartenza": "09:00:00",
+"fermataId": "IDFM:23314",
+"fermataSequenza":0,
+"destinazione":"CERGY LE HAUT"
+},
+{
+"corsoId": "IDFM:STIVO_POISSY",
+"oraArrivo":"09:20:00",
+"oraPartenza": "09:30:00",
+"fermataId": "IDFM:23313",
+"fermataSequenza":1,
+"destinazione":"POISSY"
+}
+]

@@ -1,0 +1,37 @@
+[
+{
+"fermataId": "IDFM:23310",
+"fermataName": "Gare de Luzarches",
+"fermataLat": 2.4207005,  
+"fermataLon": 49.1172097,
+"fermataZoneId": 5
+},
+{
+"fermataId": "IDFM:23311",
+"fermataName": "Gare de Pontoise",
+"fermataLat": 2.0890507, 
+"fermataLon": 49.0373737,
+"fermataZoneId": 5
+},
+{
+"fermataId": "IDFM:23312",
+"fermataName": "Gare de Cergy",
+"fermataLat": 2.0684514,  
+"fermataLon": 49.0373737,
+"fermataZoneId": 5
+},
+{
+"fermataId": "IDFM:23313",
+"fermataName": "Gare de Cergy le Haut",
+"fermataLat": 2.01088,  
+"fermataLon": 49.04778,
+"fermataZoneId": 5
+},
+{
+"fermataId": "IDFM:23314",
+"fermataName": "Gare de poissy",
+"fermataLat": 2.0208364,  
+"fermataLon": 48.9414553,
+"fermataZoneId": 5
+}
+]
