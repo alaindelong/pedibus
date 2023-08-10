@@ -1,7 +1,10 @@
 package com.example.pedibus.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,126 +58,129 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 	}
 
 	@Override
-	public List<PrenotazioneDto> getPrenotazioni(String nomeLinea, String data) {
+	public PrenotazioneDto getPrenotazioni(String nomeLinea, String data) {
 		
 		List<Prenotazione> lps = prenotazioneRepository
 				                 .findByNomeLineaIgnoreCaseAndGiorno(nomeLinea, data);
 		List<FermataDto> fdtos = fermataService.findByPercorsoLongName(nomeLinea);
-		
+		List<FermataDto> fermateAndata = new ArrayList<FermataDto>();
+		List<FermataDto> fermateRitorno = new ArrayList<FermataDto>();
 		if(lps!=null)
 			System.out.println("=====numbero prenotazioni "+lps.size());
-		if(fdtos!=null)
+		if(fdtos!=null) {
 			System.out.println("====numero fermate "+fdtos.size());
-		List<PrenotazioneDto> pdtos = new ArrayList<PrenotazioneDto>();
+			fermateAndata = fdtos.stream()
+			     .filter(f -> f.getDirectionId() ==0)
+			     .collect(Collectors.toList());
+			fermateRitorno = fdtos.stream()
+				     .filter(f -> f.getDirectionId() ==1)
+				     .collect(Collectors.toList());
+		}
+			
+		PrenotazioneDto pdto = new PrenotazioneDto();
+		//je recupère la liste des fermates andata
+		Map<String,List<String>> daCaricareAndata = new HashMap<String, List<String>>();
+		Map<String,List<String>> daLasciareAndata = new HashMap<String, List<String>>();
+		//je recupère la liste des fermates ritorno
+		Map<String,List<String>> daCaricareRitorno = new HashMap<String, List<String>>();
+		Map<String,List<String>> daLasciareRitorno = new HashMap<String, List<String>>();
 		if(lps !=null) {
-			PrenotazioneDto pdto = new PrenotazioneDto();
+			
 			for(Prenotazione p:lps) {
 				
 				pdto.setGiorno(p.getGiorno());
 				pdto.setNomeLinea(p.getNomeLinea());
 				if(p.getDirezione() == 0) {
 					//prenotazioni andata
-					for(FermataDto f:fdtos) {
-						
-						FermataPrenotataDto fpdto = new FermataPrenotataDto();
-						fpdto.setFermataId(f.getFermataId());
-						fpdto.setFermataName(f.getFermataName());
-						//get user by nome or altro
-						
-						if(f.getFermataName().equals(p.getNomeFermataDiPartenza())) {
-							//caricare
-							if(fpdto.getCaricati()!=null)
-								 fpdto.getCaricati().add(p.getNomeBambino());
-							else fpdto.setCaricati(new ArrayList<String>(List.of( p.getNomeBambino())));
-							if(pdto.getAndata()!=null) {
-								int cont =0; boolean flag = false;
-								for(FermataPrenotataDto fp:pdto.getAndata()) {
-								if(fp.getFermataName().equals(fpdto.getFermataName())) {
-									pdto.getAndata().get(cont).getCaricati().add(p.getNomeBambino());
-									flag=true;
-								}
-								cont++;	
-								}
-								if(!flag)
-								  pdto.getAndata().add(fpdto);
-							}
-							 else pdto.setAndata(new ArrayList<FermataPrenotataDto>(List.of(fpdto)));
+					
+					for(FermataDto fa:fermateAndata) {
+					if(fa.getFermataName().equals(p.getNomeFermataDiPartenza())) {
+						//caricare
+						if(daCaricareAndata == null) {
+							//j'insère
+							daCaricareAndata.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
+						}else {
+							//je check d'abord la clé
+							if(daCaricareAndata.containsKey(fa.getFermataName()))
+								daCaricareAndata.get(fa.getFermataName()).add(p.getNomeBambino());
+							else
+								daCaricareAndata.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
 						}
-						if(f.getFermataName().equals(p.getNomeFermataDiArrivo())) {
-							//lasciare
-							if(fpdto.getLasciati()!=null)
-								 fpdto.getLasciati().add(p.getNomeBambino());
-								else fpdto.setLasciati(new ArrayList<String>(List.of( p.getNomeBambino())));
-								if(pdto.getRitorno()!=null) {
-									int cont =0; boolean flag = false;
-									for(FermataPrenotataDto fp:pdto.getRitorno()) {
-										if(fp.getFermataName().equals(fpdto.getFermataName())) {
-											pdto.getRitorno().get(cont).getLasciati().add(p.getNomeBambino());
-											flag=true;
-										}
-										cont++;	
-										}
-										if(!flag)
-									pdto.getRitorno().add(fpdto);
-								}
-								 
-								else pdto.setRitorno(new ArrayList<FermataPrenotataDto>(List.of(fpdto)));
-						}
-						
 					}
+					if(fa.getFermataName().equals(p.getNomeFermataDiArrivo())) {
+						//lasciare
+						if(daLasciareAndata == null) {
+							//j'insère
+							daLasciareAndata.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
+						}else {
+							//je check d'abord la clé
+							if(daLasciareAndata.containsKey(fa.getFermataName()))
+								daLasciareAndata.get(fa.getFermataName()).add(p.getNomeBambino());
+							else
+								daLasciareAndata.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
+						}
+					}
+					}
+						//je fais la suite ici
 				}else {
 					//prenotazioni ritorno
-					for(FermataDto f:fdtos) {
-						FermataPrenotataDto fpdto = new FermataPrenotataDto();
-						fpdto.setFermataId(f.getFermataId());
-						fpdto.setFermataName(f.getFermataName());
-						if(f.getFermataName().equals(p.getNomeFermataDiPartenza())) {
+					
+					for(FermataDto fa:fermateRitorno) {
+						if(fa.getFermataName().equals(p.getNomeFermataDiPartenza())) {
 							//caricare
-							if(fpdto.getCaricati()!=null)
-								 fpdto.getCaricati().add(p.getNomeBambino());
-							else fpdto.setCaricati(new ArrayList<String>(List.of( p.getNomeBambino())));
-							if(pdto.getAndata()!=null) {
-								int cont =0; boolean flag = false;
-								for(FermataPrenotataDto fp:pdto.getAndata()) {
-								if(fp.getFermataName().equals(fpdto.getFermataName())) {
-									pdto.getAndata().get(cont).getCaricati().add(p.getNomeBambino());
-									flag=true;
-								}
-								cont++;	
-								}
-								if(!flag)
-								  pdto.getAndata().add(fpdto);
+							if(daCaricareRitorno == null) {
+								//j'insère
+								daCaricareRitorno.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
+							}else {
+								//je check d'abord la clé
+								if(daCaricareRitorno.containsKey(fa.getFermataName()))
+									daCaricareRitorno.get(fa.getFermataName()).add(p.getNomeBambino());
+								else
+									daCaricareRitorno.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
 							}
-							 else pdto.setAndata(new ArrayList<FermataPrenotataDto>(List.of(fpdto)));
 						}
-						if(f.getFermataName().equals(p.getNomeFermataDiArrivo())) {
+						if(fa.getFermataName().equals(p.getNomeFermataDiArrivo())) {
 							//lasciare
-							if(fpdto.getLasciati()!=null)
-								 fpdto.getLasciati().add(p.getNomeBambino());
-								else fpdto.setLasciati(new ArrayList<String>(List.of( p.getNomeBambino())));
-								if(pdto.getRitorno()!=null) {
-									int cont =0; boolean flag = false;
-									for(FermataPrenotataDto fp:pdto.getRitorno()) {
-										if(fp.getFermataName().equals(fpdto.getFermataName())) {
-											pdto.getRitorno().get(cont).getLasciati().add(p.getNomeBambino());
-											flag=true;
-										}
-										cont++;	
-										}
-										if(!flag)
-									pdto.getRitorno().add(fpdto);
-								}
-								 
-								else pdto.setRitorno(new ArrayList<FermataPrenotataDto>(List.of(fpdto)));
+							if(daLasciareRitorno == null) {
+								//j'insère
+								daLasciareRitorno.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
+							}else {
+								//je check d'abord la clé
+								if(daLasciareRitorno.containsKey(fa.getFermataName()))
+									daLasciareRitorno.get(fa.getFermataName()).add(p.getNomeBambino());
+								else
+									daLasciareRitorno.put(fa.getFermataName(), new ArrayList<String>(List.of(p.getNomeBambino())));
+							}
 						}
-					}
+						}
+							
 				}
 				
 			}
-			pdtos.add(pdto);
+			//la suite
+			 List<FermataPrenotataDto> andata = new ArrayList<FermataPrenotataDto>();
+			 List<FermataPrenotataDto> ritorno = new ArrayList<FermataPrenotataDto>();
+			 for(FermataDto fa:fermateAndata) {
+				 FermataPrenotataDto fp = new FermataPrenotataDto();
+				 fp.setFermataId(fa.getFermataId());
+				 fp.setFermataName(fa.getFermataName());
+				 fp.setCaricati( daCaricareAndata.get(fa.getFermataName()));
+				 fp.setLasciati(daLasciareAndata.get(fa.getFermataName()));
+				 andata.add(fp);
+			 }
+			 for(FermataDto fr:fermateRitorno) {
+				 FermataPrenotataDto fp = new FermataPrenotataDto();
+				 fp.setFermataId(fr.getFermataId());
+				 fp.setFermataName(fr.getFermataName());
+				 fp.setCaricati( daCaricareRitorno.get(fr.getFermataName()));
+				 fp.setLasciati(daLasciareRitorno.get(fr.getFermataName()));
+				 ritorno.add(fp);
+			 }
+			 pdto.setAndata(andata);
+			 pdto.setRitorno(ritorno);
+			 
 		}
-		
-		return pdtos;
+		return pdto;
 	}
 
 	@Override
@@ -184,6 +190,40 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 			result.add(addPrenotazione(p));
 		}
 		return result;
+	}
+
+	@Override
+	public Prenotazione updatePrenotazione(Prenotazione prenotazione,String nomeLinea,String data, Long prenotazioneId) {
+		Prenotazione p = prenotazioneRepository.findByNomeLineaAndGiornoAndId(nomeLinea,data,prenotazioneId);
+		if(p !=null) {
+			p.setDirezione(prenotazione.getDirezione());
+			//if(prenotazione.getGiorno()!=null)
+			p.setGiorno(data);
+			if(prenotazione.getNomeBambino()!=null)
+			p.setNomeBambino(prenotazione.getNomeBambino());
+			if(prenotazione.getNomeFermataDiArrivo()!=null)
+			p.setNomeFermataDiArrivo(prenotazione.getNomeFermataDiArrivo());
+			if(prenotazione.getNomeFermataDiPartenza()!=null)
+			p.setNomeFermataDiPartenza(prenotazione.getNomeFermataDiPartenza());
+			//if(prenotazione.getNomeLinea()!=null)
+			p.setNomeLinea(nomeLinea);
+			if(prenotazione.getOra()!=null)
+			p.setOra(prenotazione.getOra());
+			if(prenotazione.getNomePrenotatore()!=null)
+			p.setNomePrenotatore(prenotazione.getNomePrenotatore());
+		}
+		return p;
+	}
+
+	@Override
+	public void deletePrenotazione(String nomeLinea, String data, Long prenotazioneId) {
+		prenotazioneRepository.deleteByNomeLineaIgnoreCaseAndGiornoAndId(nomeLinea, data, prenotazioneId);
+	}
+
+	@Override
+	public Prenotazione getPrenotazione(String nomeLinea, String data, Long prenotazioneId) {
+		
+		return prenotazioneRepository.findByNomeLineaIgnoreCaseAndGiornoAndId(nomeLinea, data, prenotazioneId);
 	}
 
 }
