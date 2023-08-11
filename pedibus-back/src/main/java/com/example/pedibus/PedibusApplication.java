@@ -1,6 +1,5 @@
 package com.example.pedibus;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +10,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.pedibus.model.Agenzia;
+import com.example.pedibus.model.PedibusUser;
 import com.example.pedibus.model.Prenotazione;
 import com.example.pedibus.model.User;
+import com.example.pedibus.security.ApplicationUserRole;
 import com.example.pedibus.service.AgenziaService;
 import com.example.pedibus.service.CalendarioService;
 import com.example.pedibus.service.CorsaService;
 import com.example.pedibus.service.DateCalendarioService;
 import com.example.pedibus.service.FermataService;
 import com.example.pedibus.service.OreFermataService;
+import com.example.pedibus.service.PedibusUserService;
 import com.example.pedibus.service.PercorsoService;
 import com.example.pedibus.service.PrenotazioneService;
 import com.example.pedibus.service.UserService;
@@ -42,7 +44,8 @@ public class PedibusApplication {
 			OreFermataService oreFermataService,
 			PercorsoService percorsoService,
 			UserService userService,
-			PrenotazioneService prenotazioneService
+			PrenotazioneService prenotazioneService,
+			PedibusUserService pedibusUserService
 			) {
 		String urlAgenzie = "/data/agenzia.json";
 		String urlCalendario = "/data/calendario.json";
@@ -53,6 +56,25 @@ public class PedibusApplication {
 		String urlPercorsi = "/data/percorsi.json";
 		//USERS
 		List<User> users = new ArrayList<>();
+		List<PedibusUser> pUsers = new ArrayList<PedibusUser>();
+		pUsers.add(new PedibusUser(1L,
+				ApplicationUserRole.ADMIN.name(),
+				"admin",
+				"admin",
+				"admin@gmail.com",
+				"admin",
+				true, true, true, true
+					));
+		for(int i=0;i<5;i++) {
+			pUsers.add(new PedibusUser(1L,
+					ApplicationUserRole.USER.name(),
+					"user"+i,
+					"user",
+					"user"+i+"@gmail.com",
+					"user"+i,
+					true, true, true, true
+						));
+		}
 		User papa1 = new User();
 		papa1.setCognome("papa1");papa1.setNome("papa1");papa1.setEmail("papa1@gmail.com");
 		users.add(papa1);
@@ -183,6 +205,7 @@ public class PedibusApplication {
 			percorsoService.addPercorsi(urlPercorsi);
 			userService.addUsers(users);
 			prenotazioneService.addPrenotazioni(prenotazioni);
+			pedibusUserService.addPedibusUsers(pUsers);
 		};
 	}
 
