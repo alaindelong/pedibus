@@ -2,6 +2,7 @@ package com.example.pedibus.service.impl;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pedibus.model.PedibusUser;
 import com.example.pedibus.repository.PedibusUserRepository;
+import com.example.pedibus.security.ApplicationUserRole;
 import com.example.pedibus.service.PedibusUserService;
 
 @Service
 @Transactional
-public class PedibusUserServiceImpl implements PedibusUserService,
-UserDetailsService{
+public class PedibusUserServiceImpl implements PedibusUserService{
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+   private PasswordEncoder passwordEncoder;	
 	@Autowired
 	private PedibusUserRepository pedibusUserRepository;
 	@Override
@@ -34,7 +35,9 @@ UserDetailsService{
 		p.setNome(pedibusUser.getNome());
 		p.setEmail(pedibusUser.getEmail());
 		p.setPassword(passwordEncoder.encode(pedibusUser.getPassword()));
-		p.setRole(pedibusUser.getRole());
+		if(pedibusUser.getRole()==null)
+			p.setRole(ApplicationUserRole.USER.name());
+		else p.setRole(pedibusUser.getRole());
 		p.setAccountNonExpired(true);
 		p.setAccountNonLocked(true);
 		p.setCredentialsNonExpired(true);
@@ -48,14 +51,6 @@ UserDetailsService{
 		return pedibusUserRepository.findByUsername(username);
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
-		UserDetails u = pedibusUserRepository.findByUsername(username);
-		if(u==null)
-			throw new UsernameNotFoundException("user with username "+username+" not found");
-		return u;
-	}
 
 	@Override
 	public PedibusUser updatePedibusUser(PedibusUser pedibusUser, Long id) throws Exception {
@@ -76,7 +71,12 @@ UserDetailsService{
 
 	@Override
 	public List<PedibusUser> addPedibusUsers(List<PedibusUser> pedibusUsers) {
-		return pedibusUserRepository.saveAll(pedibusUsers);
+		List<PedibusUser> result=new ArrayList<PedibusUser>();
+		for(PedibusUser p :pedibusUsers) {
+			p.setPassword(passwordEncoder.encode(p.getPassword()));
+			result.add(p);
+		}
+		return pedibusUserRepository.saveAll(result);
 	}
 
 	@Override

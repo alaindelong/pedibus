@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.pedibus.model.Agenzia;
 import com.example.pedibus.model.PedibusUser;
@@ -32,6 +34,10 @@ public class PedibusApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PedibusApplication.class, args);
+	}
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(10);
 	}
 	
 	@Bean
@@ -68,8 +74,8 @@ public class PedibusApplication {
 		for(int i=0;i<5;i++) {
 			pUsers.add(new PedibusUser(1L,
 					ApplicationUserRole.USER.name(),
-					"user"+i,
 					"user",
+					"user"+i,
 					"user"+i+"@gmail.com",
 					"user"+i,
 					true, true, true, true
