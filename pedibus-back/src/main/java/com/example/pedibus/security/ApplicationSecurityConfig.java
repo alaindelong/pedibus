@@ -42,8 +42,8 @@ public class ApplicationSecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.antMatchers("/").permitAll()
             		.antMatchers("/h2/**").permitAll()
-            		//.antMatchers("/login/**").permitAll()
             		.antMatchers("/register","/login").permitAll()
+            		.antMatchers("/users").hasRole(ApplicationUserRole.ADMIN.name())
             		//.antMatchers("/reservations/**").hasRole(ApplicationUserRole.ADMIN.name())
             		//.antMatchers(HttpMethod.POST, "/management/**").hasAuthority(ApplicationUserPermission.USER_WRITE.getPermission())
             		//.antMatchers(HttpMethod.PUT, "/management/**").hasAuthority(ApplicationUserPermission.USER_WRITE.getPermission())
@@ -51,9 +51,9 @@ public class ApplicationSecurityConfig {
             		//.antMatchers(HttpMethod.GET, "/management/**").hasAnyRole(ApplicationUserRole.ADMIN.name())
                 .anyRequest().authenticated()
             		//.anyRequest().permitAll()
-            );
+            )
             //.httpBasic();
-           // .headers(headers -> headers.frameOptions().disable());
+            .headers(headers -> headers.frameOptions().disable());
         return http.getOrBuild();
     }
 	@Bean

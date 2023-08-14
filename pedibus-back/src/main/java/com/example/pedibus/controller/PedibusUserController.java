@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pedibus.model.PedibusUser;
 import com.example.pedibus.security.TokenProvider;
+import com.example.pedibus.service.EmailService;
 import com.example.pedibus.service.PedibusUserService;
 
 @RestController
@@ -19,6 +21,8 @@ public class PedibusUserController {
 	private PedibusUserService pedibusUserService;
     @Autowired
     private TokenProvider tokenProvider;
+    @Autowired
+    private EmailService emailService;
     
     @PostMapping("/login")
 	public String addPedibusUser(@RequestBody PedibusUser pedibusUser) throws Exception {
@@ -28,26 +32,35 @@ public class PedibusUserController {
 	}
     @PostMapping("/register")
 	public String register(@RequestBody PedibusUser pedibusUser) throws Exception {
+    	if(!emailService.isEmailValid(pedibusUser.getEmail())) {
+    		throw new IllegalAccessException("email not valid "+pedibusUser.getEmail());
+    	}
     	PedibusUser p =pedibusUserService.findByUsername(pedibusUser.getUsername());
     	if(p != null) {
     		System.out.println("user with username "+pedibusUser.getUsername()+" already exists");
-    		return null;
+    		throw new IllegalAccessException("user with username "+pedibusUser.getUsername()+" already exists");
     	}
     	PedibusUser pe = pedibusUserService.addPedibusUser(pedibusUser);
     	System.out.println("register");
 		return tokenProvider.createToken(pe);
 	}
-    @GetMapping("/login/{username}")
+    @GetMapping("/users/{username}")
 	public PedibusUser findByUsername(@PathVariable String username) {
 		return pedibusUserService.findByUsername(username);
 	}
-	public PedibusUser updatePedibusUser(PedibusUser pedibusUser, Long id) throws Exception{
+    @PutMapping("/users/{id}")
+	public PedibusUser updatePedibusUser(@RequestBody PedibusUser pedibusUser,@PathVariable Long id) throws Exception{
 		return pedibusUserService.updatePedibusUser(pedibusUser, id);
 	}
 	public List<PedibusUser> addPedibusUsers(List<PedibusUser> pedibusUsers){
 		return pedibusUserService.addPedibusUsers(pedibusUsers);
 	}
+	@GetMapping("/users")
 	public List<PedibusUser> getAllPedibusUser(){
 		return pedibusUserService.getAllPedibusUser();
+	}
+	@GetMapping("/users/{id}")
+	public PedibusUser getPedibusUser(@PathVariable Long id) {
+		return pedibusUserService.getPedibusUser(id);
 	}
 }

@@ -10,4 +10,6 @@ public PedibusUser findByUsername(String username);
 public PedibusUser updatePedibusUser(PedibusUser pedibusUser, Long id) throws Exception;
 public List<PedibusUser> addPedibusUsers(List<PedibusUser> pedibusUsers);
 public List<PedibusUser> getAllPedibusUser();
+public PedibusUser getPedibusUser(Long id);
+public String enableUser(String username);
 }

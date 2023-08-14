@@ -44,5 +44,19 @@ public class PedibusUser implements UserDetails {
 		authorities.add(new Role("ROLE_"+this.role));
 		return authorities;
 	}
+	
+	
+	public Collection<? extends GrantedAuthority> removeAuthorities(String role) {
+		Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) getAuthorities();
+		authorities.remove(new Role("ROLE_"+role));
+		//authorities.add(new Role("ROLE_"+role));
+		return authorities;
+	}
+	public Collection<? extends GrantedAuthority> addAuthorities(String role) {
+		Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) getAuthorities();
+		//authorities.remove(new Role("ROLE_"+role));
+		authorities.add(new Role("ROLE_"+role));
+		return authorities;
+	}
 
 }
