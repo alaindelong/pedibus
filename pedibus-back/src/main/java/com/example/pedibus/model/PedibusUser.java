@@ -4,21 +4,31 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.pedibus.security.ApplicationUserRole;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PedibusUser implements UserDetails {
@@ -26,7 +36,11 @@ public class PedibusUser implements UserDetails {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private  String role;
-	//private final Set<? extends GrantedAuthority> authorities;
+	@ManyToMany( fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinTable(joinColumns =@JoinColumn(name= "pedibusUserId"),
+	inverseJoinColumns =@JoinColumn(name= "roleId"))
+	private Set<Role> authorities = new HashSet<Role>();
+	//private Set<Role> authorities;
 	private  String password;
 	private  String username;
 	private String email;
@@ -39,22 +53,22 @@ public class PedibusUser implements UserDetails {
 	
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-		authorities.add(new Role("ROLE_"+this.role));
+	public Collection< Role> getAuthorities() {
+		/*Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		authorities.add(new Role("ROLE_"+this.role));*/
 		return authorities;
 	}
 	
 	
-	public Collection<? extends GrantedAuthority> removeAuthorities(String role) {
-		Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) getAuthorities();
+	public Collection< Role> removeAuthorities(String role) {
+		/*Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) getAuthorities();
 		authorities.remove(new Role("ROLE_"+role));
-		//authorities.add(new Role("ROLE_"+role));
+		//authorities.add(new Role("ROLE_"+role));*/
 		return authorities;
 	}
-	public Collection<? extends GrantedAuthority> addAuthorities(String role) {
-		Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) getAuthorities();
-		//authorities.remove(new Role("ROLE_"+role));
+	public Collection<Role> addAuthorities(String role) {
+		/*Set<GrantedAuthority> authorities = (Set<GrantedAuthority>) getAuthorities();
+		//authorities.remove(new Role("ROLE_"+role));*/
 		authorities.add(new Role("ROLE_"+role));
 		return authorities;
 	}

@@ -2,8 +2,13 @@ package com.example.pedibus;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.example.pedibus.model.Agenzia;
 import com.example.pedibus.model.PedibusUser;
 import com.example.pedibus.model.Prenotazione;
+import com.example.pedibus.model.Role;
 import com.example.pedibus.model.User;
+import com.example.pedibus.repository.RoleRepository;
 import com.example.pedibus.security.ApplicationUserRole;
 import com.example.pedibus.service.AgenziaService;
 import com.example.pedibus.service.CalendarioService;
@@ -40,6 +47,9 @@ public class PedibusApplication {
 		return new BCryptPasswordEncoder(10);
 	}
 	
+	@Autowired
+	public RoleRepository roleRepository;
+	
 	@Bean
 	CommandLineRunner runner(
 			AgenziaService agenziaService,
@@ -60,20 +70,37 @@ public class PedibusApplication {
 		String urlFermate = "/data/fermate.json";
 		String urlOreFermate = "/data/ore_fermata.json";
 		String urlPercorsi = "/data/percorsi.json";
+		//ROLES
+		/*Set<Role> roles = new HashSet<Role>();
+		roles = Stream.of(ApplicationUserRole.values())
+		.map(v -> new Role(v.name()))
+		.collect(Collectors.toSet());
+		roleRepository.saveAll(roles);*/
 		//USERS
 		List<User> users = new ArrayList<>();
 		List<PedibusUser> pUsers = new ArrayList<PedibusUser>();
 		pUsers.add(new PedibusUser(1L,
 				ApplicationUserRole.ADMIN.name(),
+				Set.of(new Role(ApplicationUserRole.ADMIN.name())),
 				"admin",
 				"admin",
 				"admin@gmail.com",
 				"admin",
 				true, true, true, true
 					));
+		pUsers.add(new PedibusUser(1L,
+				ApplicationUserRole.SYSTEM_ADMIN.name(),
+				Set.of(new Role(ApplicationUserRole.SYSTEM_ADMIN.name())),
+				"admin",
+				"sysadmin",
+				"sysadmin@gmail.com",
+				"sysadmin",
+				true, true, true, true
+					));
 		for(int i=0;i<5;i++) {
 			pUsers.add(new PedibusUser(1L,
 					ApplicationUserRole.USER.name(),
+					Set.of(new Role(ApplicationUserRole.USER.name())),
 					"user",
 					"user"+i,
 					"user"+i+"@gmail.com",

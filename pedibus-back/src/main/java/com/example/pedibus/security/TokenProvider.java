@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pedibus.model.PedibusUser;
 

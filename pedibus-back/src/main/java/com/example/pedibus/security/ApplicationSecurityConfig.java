@@ -42,8 +42,8 @@ public class ApplicationSecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.antMatchers("/").permitAll()
             		.antMatchers("/h2/**").permitAll()
-            		.antMatchers("/register","/login").permitAll()
-            		.antMatchers("/users").hasRole(ApplicationUserRole.ADMIN.name())
+            		.antMatchers("/register/**","/login").permitAll()
+            		.antMatchers("/users").hasRole(ApplicationUserRole.SYSTEM_ADMIN.name())
             		//.antMatchers("/reservations/**").hasRole(ApplicationUserRole.ADMIN.name())
             		//.antMatchers(HttpMethod.POST, "/management/**").hasAuthority(ApplicationUserPermission.USER_WRITE.getPermission())
             		//.antMatchers(HttpMethod.PUT, "/management/**").hasAuthority(ApplicationUserPermission.USER_WRITE.getPermission())

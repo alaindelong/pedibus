@@ -9,6 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public enum ApplicationUserRole {
+SYSTEM_ADMIN(Set.of(ApplicationUserPermission.USER_READ,
+		ApplicationUserPermission.USER_WRITE,
+		ApplicationUserPermission.ADMIN_READ,
+		ApplicationUserPermission.ADMIN_WRITE)),
 ADMIN(Set.of(ApplicationUserPermission.USER_READ,ApplicationUserPermission.USER_WRITE)),
 ACCOMPAGNATORE(Set.of()),
 PASSAGGERO(Set.of()),

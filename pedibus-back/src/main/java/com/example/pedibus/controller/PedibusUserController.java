@@ -52,7 +52,7 @@ public class PedibusUserController {
 	public PedibusUser updatePedibusUser(@RequestBody PedibusUser pedibusUser,@PathVariable Long id) throws Exception{
 		return pedibusUserService.updatePedibusUser(pedibusUser, id);
 	}
-	public List<PedibusUser> addPedibusUsers(List<PedibusUser> pedibusUsers){
+	public List<PedibusUser> addPedibusUsers(List<PedibusUser> pedibusUsers) throws Exception{
 		return pedibusUserService.addPedibusUsers(pedibusUsers);
 	}
 	@GetMapping("/users")
@@ -62,5 +62,9 @@ public class PedibusUserController {
 	@GetMapping("/users/{id}")
 	public PedibusUser getPedibusUser(@PathVariable Long id) {
 		return pedibusUserService.getPedibusUser(id);
+	}
+	@GetMapping("/users/{username}/{operation}/{role}")
+	public boolean addOrRemoveAuthority(@PathVariable String username,@PathVariable String operation,@PathVariable String role) {
+		return pedibusUserService.addOrRemoveAuthority(username, operation, role);
 	}
 }
