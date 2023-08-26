@@ -16,7 +16,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.pedibus.model.Accompagnatore;
 import com.example.pedibus.model.Agenzia;
+import com.example.pedibus.model.Passaggero;
 import com.example.pedibus.model.PedibusUser;
 import com.example.pedibus.model.Prenotazione;
 import com.example.pedibus.model.Role;
@@ -97,14 +99,35 @@ public class PedibusApplication {
 				"sysadmin",
 				true, true, true, true
 					));
-		for(int i=0;i<5;i++) {
-			pUsers.add(new PedibusUser(1L,
+		for(int i=1;i<=5;i++) {
+			pUsers.add(new Passaggero(1L,
 					ApplicationUserRole.USER.name(),
 					Set.of(new Role(ApplicationUserRole.USER.name())),
-					"user",
-					"user"+i,
-					"user"+i+"@gmail.com",
-					"user"+i,
+					"pass",
+					"pass"+i,
+					"pass"+i+"@gmail.com",
+					"pass"+i,
+					true, true, true, true
+						));
+		}
+		Passaggero p =new Passaggero(1L,
+				ApplicationUserRole.USER.name(),
+				Set.of(new Role(ApplicationUserRole.USER.name())),
+				"pass",
+				"pass",
+				"pass"+"@gmail.com",
+				"pass",
+				true, true, true, true
+					);
+		for(int i=0;i<5;i++) {
+			pUsers.add(new Accompagnatore(1L,
+					ApplicationUserRole.ACCOMPAGNATORE.name(),
+					Set.of(new Role(ApplicationUserRole.USER.name()),
+							new Role(ApplicationUserRole.ACCOMPAGNATORE.name())),
+					"accomp",
+					"accomp"+i,
+					"accomp"+i+"@gmail.com",
+					"accomp"+i,
 					true, true, true, true
 						));
 		}
@@ -144,7 +167,7 @@ public class PedibusApplication {
 		//papa1 prenota per il bambino1
 		Prenotazione pa1 = new Prenotazione();
 		pa1.setGiorno("20230702");
-		pa1.setNomeBambino("bambino1");
+		pa1.setNomeBambino("pass1");
 		pa1.setNomePrenotatore("papa1");
 		pa1.setNomeLinea("LIGNE_9518");
 		pa1.setNomeFermataDiPartenza("Gare de poissy");
@@ -154,7 +177,7 @@ public class PedibusApplication {
 		prenotazioni.add(pa1);
 		Prenotazione pr1 = new Prenotazione();
 		pr1.setGiorno("20230702");
-		pr1.setNomeBambino("bambino1");
+		pr1.setNomeBambino("pass1");
 		pr1.setNomePrenotatore("papa1");
 		pr1.setNomeLinea("LIGNE_9518");
 		pr1.setNomeFermataDiPartenza("Gare de Cergy le Haut");
@@ -164,7 +187,7 @@ public class PedibusApplication {
 		//papa3 prenota per il bambino3
 				Prenotazione pa3 = new Prenotazione();
 				pa3.setGiorno("20230702");
-				pa3.setNomeBambino("bambino3");
+				pa3.setNomeBambino("pass3");
 				pa3.setNomePrenotatore("papa3");
 				pa3.setNomeLinea("LIGNE_9518");
 				pa3.setNomeFermataDiPartenza("Gare de poissy");
@@ -173,7 +196,7 @@ public class PedibusApplication {
 				prenotazioni.add(pa3);
 				Prenotazione pr3 = new Prenotazione();
 				pr3.setGiorno("20230702");
-				pr3.setNomeBambino("bambino3");
+				pr3.setNomeBambino("pass3");
 				pr3.setNomePrenotatore("papa3");
 				pr3.setNomeLinea("LIGNE_9518");
 				pr3.setNomeFermataDiPartenza("Gare de Cergy le Haut");
@@ -183,7 +206,7 @@ public class PedibusApplication {
 		//papa1 prenota per il bambino11
 				Prenotazione pa11 = new Prenotazione();
 				pa11.setGiorno("20230702");
-				pa11.setNomeBambino("bambino11");
+				pa11.setNomeBambino("pass4");
 				pa11.setNomePrenotatore("papa1");
 				pa11.setNomeLinea("LIGNE_H");
 				pa11.setNomeFermataDiPartenza("Gare de Luzarches");
@@ -192,7 +215,7 @@ public class PedibusApplication {
 				prenotazioni.add(pa11);
 				Prenotazione pr11 = new Prenotazione();
 				pr11.setGiorno("20230702");
-				pr11.setNomeBambino("bambino11");
+				pr11.setNomeBambino("pass4");
 				pr11.setNomePrenotatore("papa1");
 				pr11.setNomeLinea("LIGNE_H");
 				pr11.setNomeFermataDiPartenza("Gare de Pontoise");
@@ -202,7 +225,7 @@ public class PedibusApplication {
 			//papa2 prenota per il bambino2
 				Prenotazione pa2 = new Prenotazione();
 				pa2.setGiorno("20230702");
-				pa2.setNomeBambino("bambino2");
+				pa2.setNomeBambino("pass2");
 				pa2.setNomePrenotatore("papa2");
 				pa2.setNomeLinea("LIGNE_H");
 				pa2.setNomeFermataDiPartenza("Gare de Luzarches");
@@ -211,7 +234,7 @@ public class PedibusApplication {
 				prenotazioni.add(pa2);
 				Prenotazione pa4 = new Prenotazione();
 				pa4.setGiorno("20230702");
-				pa4.setNomeBambino("bambino4");
+				pa4.setNomeBambino("pass5");
 				pa4.setNomePrenotatore("papa2");
 				pa4.setNomeLinea("LIGNE_H");
 				pa4.setNomeFermataDiPartenza("Gare de Pontoise");
@@ -220,7 +243,7 @@ public class PedibusApplication {
 				prenotazioni.add(pa4);
 				Prenotazione pr2 = new Prenotazione();
 				pr2.setGiorno("20230702");
-				pr2.setNomeBambino("bambino2");
+				pr2.setNomeBambino("pass2");
 				pr2.setNomePrenotatore("papa2");
 				pr2.setNomeLinea("LIGNE_H");
 				pr2.setNomeFermataDiPartenza("Gare de Cergy");
@@ -239,6 +262,7 @@ public class PedibusApplication {
 			userService.addUsers(users);
 			prenotazioneService.addPrenotazioni(prenotazioni);
 			pedibusUserService.addPedibusUsers(pUsers);
+			pedibusUserService.addPedibusUser(p);
 		};
 	}
 

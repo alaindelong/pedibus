@@ -4,13 +4,15 @@
 "agenziaId":  "IDFM:13",
 "percorsoShortName": "1",
 "percorsoLongName": "LIGNE_H",
-"percorsoType": 1
+"percorsoType": 1,
+"emailAdmin":"admin@ligneh.com"
 },
 {
 "percorsoId":  "IDFM:C01370",
 "agenziaId":  "IDFM:13",
 "percorsoShortName": "2",
 "percorsoLongName": "LIGNE_9518",
-"percorsoType": 1
+"percorsoType": 1,
+"emailAdmin":"admin@ligne9518.com"
 }
 ]

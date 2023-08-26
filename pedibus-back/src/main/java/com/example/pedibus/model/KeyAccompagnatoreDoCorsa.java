@@ -1,5 +1,8 @@
 package com.example.pedibus.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,17 +12,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Percorso {
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String percorsoId;
-	private String agenziaId;
-	private String percorsoShortName;
-	private String percorsoLongName;
-	private int percorsoType;
-	private String emailAdmin;
+public class KeyAccompagnatoreDoCorsa implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	private Long accompagnatoreId;
+	private Long corsoId;
 }

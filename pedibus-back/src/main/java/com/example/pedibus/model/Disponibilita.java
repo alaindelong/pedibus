@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,13 +14,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Percorso {
+public class Disponibilita {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String percorsoId;
-	private String agenziaId;
-	private String percorsoShortName;
-	private String percorsoLongName;
-	private int percorsoType;
-	private String emailAdmin;
+private Long id;
+private String giorno;
+private String direzione;
+@ManyToOne
+private Accompagnatore accompagnatore;
 }

@@ -16,7 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.pedibus.model.Accompagnatore;
 import com.example.pedibus.model.ConfirmationToken;
+import com.example.pedibus.model.Passaggero;
 import com.example.pedibus.model.PedibusUser;
 import com.example.pedibus.model.Role;
 import com.example.pedibus.repository.PedibusUserRepository;
@@ -44,7 +46,12 @@ public class PedibusUserServiceImpl implements PedibusUserService{
 	public PedibusUser addPedibusUser(PedibusUser pedibusUser) throws Exception {
 		if(pedibusUser != null && pedibusUserRepository.findByUsername(pedibusUser.getUsername())!=null)
 			throw new Exception("username "+pedibusUser.getUsername()+" already exists");
+		//PedibusUser p = new PedibusUser();
 		PedibusUser p = new PedibusUser();
+		if(pedibusUser instanceof Passaggero)
+		 p = new Passaggero();
+		if(pedibusUser instanceof Accompagnatore)
+			p = new Accompagnatore();
 		p.setUsername(pedibusUser.getUsername());
 		p.setNome(pedibusUser.getNome());
 		p.setEmail(pedibusUser.getEmail());
