@@ -3,6 +3,7 @@ package com.example.pedibus.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.example.pedibus.security.TokenProvider;
 import com.example.pedibus.service.EmailService;
 import com.example.pedibus.service.PedibusUserService;
 
+@CrossOrigin
 @RestController
 public class PedibusUserController {
     @Autowired
@@ -40,6 +42,7 @@ public class PedibusUserController {
     		System.out.println("user with username "+pedibusUser.getUsername()+" already exists");
     		throw new IllegalAccessException("user with username "+pedibusUser.getUsername()+" already exists");
     	}
+    	System.out.println("input user "+pedibusUser.getEmail());
     	PedibusUser pe = pedibusUserService.addPedibusUser(pedibusUser);
     	System.out.println("register");
 		return tokenProvider.createToken(pe);
@@ -59,10 +62,10 @@ public class PedibusUserController {
 	public List<PedibusUser> getAllPedibusUser(){
 		return pedibusUserService.getAllPedibusUser();
 	}
-	@GetMapping("/users/{id}")
+	/*("/users/{id}")
 	public PedibusUser getPedibusUser(@PathVariable Long id) {
 		return pedibusUserService.getPedibusUser(id);
-	}
+	}*/
 	@GetMapping("/users/{username}/{operation}/{role}")
 	public boolean addOrRemoveAuthority(@PathVariable String username,@PathVariable String operation,@PathVariable String role) {
 		return pedibusUserService.addOrRemoveAuthority(username, operation, role);

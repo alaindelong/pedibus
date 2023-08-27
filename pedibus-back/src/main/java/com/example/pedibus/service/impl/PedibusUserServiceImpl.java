@@ -57,6 +57,7 @@ public class PedibusUserServiceImpl implements PedibusUserService{
 		p.setEmail(pedibusUser.getEmail());
 		p.setPassword(passwordEncoder.encode(pedibusUser.getPassword()));
 		if(pedibusUser.getRole()==null) {
+			pedibusUser.setRole(ApplicationUserRole.USER.name());
 			p.setRole(ApplicationUserRole.USER.name());
 			p.getAuthorities().add(new Role(ApplicationUserRole.USER.name()));
 		}	
