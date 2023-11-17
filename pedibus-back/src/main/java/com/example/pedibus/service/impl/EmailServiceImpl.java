@@ -23,10 +23,10 @@ public class EmailServiceImpl implements EmailService {
 	
 	private static Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 	
-	@Autowired
+	//@Autowired
 	private JavaMailSender javaMailSender;
 	
-	@Value("${application.regexEmail}")
+	//@Value("${application.regexEmail}")
 	private String regex;
 
 	@Override

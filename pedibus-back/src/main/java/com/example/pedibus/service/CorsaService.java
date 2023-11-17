@@ -7,4 +7,5 @@ import com.example.pedibus.model.Corsa;
 public interface CorsaService {
 
 	public List<Corsa> addCorse(String url);
+	public Corsa getCorsa(Long corsoId);
 }

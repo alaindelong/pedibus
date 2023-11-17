@@ -38,5 +38,11 @@ public class CorsaServiceImpl implements CorsaService {
 		}
 		return result;
 	}
+	@Override
+	public Corsa getCorsa(Long corsoId) {
+		Corsa corsa = corsaRepository.getReferenceById(corsoId);
+		
+		return corsa;
+	}
 
 }
