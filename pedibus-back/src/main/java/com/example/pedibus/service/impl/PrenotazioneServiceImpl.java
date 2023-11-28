@@ -226,4 +226,11 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 		return prenotazioneRepository.findByNomeLineaIgnoreCaseAndGiornoAndId(nomeLinea, data, prenotazioneId);
 	}
 
+	@Override
+	public List<Prenotazione> getBasePrenotazioni(String nomeLinea, String data,int direzione) {
+		List<Prenotazione> lps = prenotazioneRepository
+                .findByNomeLineaIgnoreCaseAndGiornoAndDirezione(nomeLinea, data,direzione);
+		return lps;
+	}
+
 }

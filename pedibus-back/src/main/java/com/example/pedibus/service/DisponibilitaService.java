@@ -4,6 +4,6 @@ import com.example.pedibus.model.Disponibilita;
 
 public interface DisponibilitaService {
 
-	Disponibilita addDisponibilita(Disponibilita disponibilita);
+	Disponibilita addDisponibilita(Disponibilita disponibilita,String username);
 	void deleteDisponibilita(Long id);
 }

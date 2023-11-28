@@ -33,5 +33,12 @@
 "fermataLat": 2.0208364,  
 "fermataLon": 48.9414553,
 "fermataZoneId": 5
+},
+{
+"fermataId": "IDFM:23315",
+"fermataName": "Gare de SGL",
+"fermataLat": 2.0208364,  
+"fermataLon": 46.9414553,
+"fermataZoneId": 4
 }
 ]

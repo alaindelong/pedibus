@@ -1,6 +1,8 @@
 package com.example.pedibus;
 
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +49,12 @@ public class PedibusApplication {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(10);
+	}
+	
+	@Bean
+	public DateTimeFormatter dateFormat() {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		return dateTimeFormatter;
 	}
 	
 	@Autowired
@@ -166,36 +174,36 @@ public class PedibusApplication {
 		List<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 		//papa1 prenota per il bambino1
 		Prenotazione pa1 = new Prenotazione();
-		pa1.setGiorno("20230702");
+		pa1.setGiorno(LocalDate.now().format(dateFormat()));
 		pa1.setNomeBambino("pass1");
 		pa1.setNomePrenotatore("papa1");
 		pa1.setNomeLinea("LIGNE_9518");
 		pa1.setNomeFermataDiPartenza("Gare de poissy");
-		pa1.setNomeFermataDiArrivo("Gare de Cergy le Haut");
+		pa1.setNomeFermataDiArrivo("Gare de SGL");
 		pa1.setOra("09:00:00");
 		
 		prenotazioni.add(pa1);
 		Prenotazione pr1 = new Prenotazione();
-		pr1.setGiorno("20230702");
+		pr1.setGiorno(LocalDate.now().format(dateFormat()));
 		pr1.setNomeBambino("pass1");
 		pr1.setNomePrenotatore("papa1");
 		pr1.setNomeLinea("LIGNE_9518");
-		pr1.setNomeFermataDiPartenza("Gare de Cergy le Haut");
+		pr1.setNomeFermataDiPartenza("Gare de SGL");
 		pr1.setNomeFermataDiArrivo("Gare de poissy");
 		pr1.setOra("14:00:00");
 		prenotazioni.add(pr1);
 		//papa3 prenota per il bambino3
 				Prenotazione pa3 = new Prenotazione();
-				pa3.setGiorno("20230702");
+				pa3.setGiorno(LocalDate.now().format(dateFormat()));
 				pa3.setNomeBambino("pass3");
 				pa3.setNomePrenotatore("papa3");
 				pa3.setNomeLinea("LIGNE_9518");
-				pa3.setNomeFermataDiPartenza("Gare de poissy");
+				pa3.setNomeFermataDiPartenza("Gare de SGL");
 				pa3.setNomeFermataDiArrivo("Gare de Cergy le Haut");
 				pa3.setOra("09:00:00");
 				prenotazioni.add(pa3);
 				Prenotazione pr3 = new Prenotazione();
-				pr3.setGiorno("20230702");
+				pr3.setGiorno(LocalDate.now().format(dateFormat()));
 				pr3.setNomeBambino("pass3");
 				pr3.setNomePrenotatore("papa3");
 				pr3.setNomeLinea("LIGNE_9518");
@@ -205,7 +213,7 @@ public class PedibusApplication {
 		    prenotazioni.add(pr3);
 		//papa1 prenota per il bambino11
 				Prenotazione pa11 = new Prenotazione();
-				pa11.setGiorno("20230702");
+				pa11.setGiorno(LocalDate.now().format(dateFormat()));
 				pa11.setNomeBambino("pass4");
 				pa11.setNomePrenotatore("papa1");
 				pa11.setNomeLinea("LIGNE_H");
@@ -214,7 +222,7 @@ public class PedibusApplication {
 				pa11.setOra("16:16:00");
 				prenotazioni.add(pa11);
 				Prenotazione pr11 = new Prenotazione();
-				pr11.setGiorno("20230702");
+				pr11.setGiorno(LocalDate.now().format(dateFormat()));
 				pr11.setNomeBambino("pass4");
 				pr11.setNomePrenotatore("papa1");
 				pr11.setNomeLinea("LIGNE_H");
@@ -224,7 +232,7 @@ public class PedibusApplication {
 				prenotazioni.add(pr11);
 			//papa2 prenota per il bambino2
 				Prenotazione pa2 = new Prenotazione();
-				pa2.setGiorno("20230702");
+				pa2.setGiorno(LocalDate.now().format(dateFormat()));
 				pa2.setNomeBambino("pass2");
 				pa2.setNomePrenotatore("papa2");
 				pa2.setNomeLinea("LIGNE_H");
@@ -233,7 +241,7 @@ public class PedibusApplication {
 				pa2.setOra("16:20:00");	
 				prenotazioni.add(pa2);
 				Prenotazione pa4 = new Prenotazione();
-				pa4.setGiorno("20230702");
+				pa4.setGiorno(LocalDate.now().format(dateFormat()));
 				pa4.setNomeBambino("pass5");
 				pa4.setNomePrenotatore("papa2");
 				pa4.setNomeLinea("LIGNE_H");
@@ -242,7 +250,7 @@ public class PedibusApplication {
 				pa4.setOra("16:20:00");	
 				prenotazioni.add(pa4);
 				Prenotazione pr2 = new Prenotazione();
-				pr2.setGiorno("20230702");
+				pr2.setGiorno(LocalDate.now().format(dateFormat()));
 				pr2.setNomeBambino("pass2");
 				pr2.setNomePrenotatore("papa2");
 				pr2.setNomeLinea("LIGNE_H");

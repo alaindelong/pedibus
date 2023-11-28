@@ -27,7 +27,7 @@ public class PedibusUserController {
     private EmailService emailService;
     
     @PostMapping("/login")
-	public String addPedibusUser(@RequestBody PedibusUser pedibusUser) throws Exception {
+	public String addPedibusUser() throws Exception {
     	System.out.println("login");
 		//return pedibusUserService.addPedibusUser(pedibusUser);
     	return "login";

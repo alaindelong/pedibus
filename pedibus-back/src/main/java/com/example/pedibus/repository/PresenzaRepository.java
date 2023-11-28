@@ -11,4 +11,5 @@ import com.example.pedibus.model.Presenza;
 public interface PresenzaRepository extends JpaRepository<Presenza, Long> {
 
 public List<Presenza> findByNomeLineaIgnoreCaseAndGiornoAndDirezione(String nomeLinea,String giorno,int direzione);
+public Presenza findByNomeLineaIgnoreCaseAndGiornoAndNomeFermata(String nomeLinea,String giorno, String nomeFermata);
 }

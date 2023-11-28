@@ -42,7 +42,7 @@ public class ApplicationSecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.antMatchers("/").permitAll()
             		.antMatchers("/h2/**").permitAll()
-            		.antMatchers("/register","/register/**","/login","/confirm","/recover","/recover/**","/users","/users/**").permitAll()
+            		.antMatchers("/register","/register/**","/login","/confirm","/recover","/recover/**","/users","/users/**","/presences/","/presences/**").permitAll()
             		//.antMatchers("/users","/users/**").hasAnyRole(ApplicationUserRole.SYSTEM_ADMIN.name(),ApplicationUserRole.ADMIN.name())
             		//.antMatchers("/reservations/**").hasRole(ApplicationUserRole.ADMIN.name())
             		//.antMatchers(HttpMethod.POST, "/management/**").hasAuthority(ApplicationUserPermission.USER_WRITE.getPermission())

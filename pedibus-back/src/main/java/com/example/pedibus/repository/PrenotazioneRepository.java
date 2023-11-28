@@ -11,6 +11,7 @@ import com.example.pedibus.model.Prenotazione;
 @Repository
 public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Long> {
 public List<Prenotazione> findByNomeLineaIgnoreCaseAndGiorno(String nomeLinea,String data);
+public List<Prenotazione> findByNomeLineaIgnoreCaseAndGiornoAndDirezione(String nomeLinea,String data,int direzione);
 public Prenotazione findByNomeLineaIgnoreCaseAndGiornoAndId(String nomeLinea,String data,Long prenotazioneId);
 public void deleteByNomeLineaIgnoreCaseAndGiornoAndId(String nomeLinea,String data,Long prenotazioneId);
 @Query("select p from Prenotazione p where UPPER(p.nomeLinea)=UPPER(?1) and p.giorno=?2 and p.id=?3")
